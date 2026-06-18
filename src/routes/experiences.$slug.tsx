@@ -45,7 +45,7 @@ export const Route = createFileRoute("/experiences/$slug")({
 });
 
 function ExperienceDetail() {
-  const { exp } = Route.useLoaderData();
+  const { exp } = Route.useLoaderData() as { exp: import("@/data/experiences").Experience };
   const related = experiences.filter((e) => e.company === exp.company && e.slug !== exp.slug).slice(0, 3);
 
   return (
