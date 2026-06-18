@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SubmitRouteImport } from './routes/submit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExperiencesIndexRouteImport } from './routes/experiences.index'
 import { Route as ExperiencesSlugRouteImport } from './routes/experiences.$slug'
 
+const SubmitRoute = SubmitRouteImport.update({
+  id: '/submit',
+  path: '/submit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +37,47 @@ const ExperiencesSlugRoute = ExperiencesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/submit': typeof SubmitRoute
   '/experiences/$slug': typeof ExperiencesSlugRoute
   '/experiences/': typeof ExperiencesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/submit': typeof SubmitRoute
   '/experiences/$slug': typeof ExperiencesSlugRoute
   '/experiences': typeof ExperiencesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/submit': typeof SubmitRoute
   '/experiences/$slug': typeof ExperiencesSlugRoute
   '/experiences/': typeof ExperiencesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/experiences/$slug' | '/experiences/'
+  fullPaths: '/' | '/submit' | '/experiences/$slug' | '/experiences/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/experiences/$slug' | '/experiences'
-  id: '__root__' | '/' | '/experiences/$slug' | '/experiences/'
+  to: '/' | '/submit' | '/experiences/$slug' | '/experiences'
+  id: '__root__' | '/' | '/submit' | '/experiences/$slug' | '/experiences/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SubmitRoute: typeof SubmitRoute
   ExperiencesSlugRoute: typeof ExperiencesSlugRoute
   ExperiencesIndexRoute: typeof ExperiencesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/submit': {
+      id: '/submit'
+      path: '/submit'
+      fullPath: '/submit'
+      preLoaderRoute: typeof SubmitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SubmitRoute: SubmitRoute,
   ExperiencesSlugRoute: ExperiencesSlugRoute,
   ExperiencesIndexRoute: ExperiencesIndexRoute,
 }
