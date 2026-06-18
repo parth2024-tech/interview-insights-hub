@@ -8,7 +8,7 @@ export const Route = createFileRoute("/experiences/$slug")({
   loader: ({ params }) => {
     const exp = getExperience(params.slug);
     if (!exp) throw notFound();
-    return { exp };
+    return { exp } as { exp: import("@/data/experiences").Experience };
   },
   head: ({ loaderData }) => {
     const exp = loaderData?.exp;
