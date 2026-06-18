@@ -60,7 +60,7 @@ function ExperiencesPage() {
   }, [search]);
 
   const update = (patch: Partial<Search>) =>
-    navigate({ search: (prev) => ({ ...prev, ...patch }) });
+    navigate({ search: (prev: Search) => ({ ...prev, ...patch }) });
 
   const activeFilters =
     [search.company, search.level, search.stage, search.year, search.q].filter(Boolean).length;
